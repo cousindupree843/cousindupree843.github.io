@@ -3,129 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Asset Library [Current Build]</title>
+    <title>Iris Icon Set Viewer</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            background: #6699CC;
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            background: white;
+            border: 2px solid #003366;
         }
-        
+
         .header {
-            margin-bottom: 30px;
+            background: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #336699;
         }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
-        
-        .breadcrumb {
-            color: #666;
-            margin-bottom: 20px;
+
+        .header p {
+            font-size: 14px;
         }
-        
-        .breadcrumb a {
-            color: #667eea;
-            text-decoration: none;
+
+        .metadata {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0;
+            padding: 0;
+            background: #E6EEF5;
+            border-bottom: 1px solid #336699;
         }
-        
-        .breadcrumb a:hover {
-            text-decoration: underline;
+
+        .metadata-item {
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            border-right: 1px solid #B0C4DE;
+            border-bottom: 1px solid #B0C4DE;
         }
-        
-        .content {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 30px;
+
+        .metadata-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #003366;
+            font-weight: bold;
+            margin-bottom: 4px;
         }
-        
-        .content p {
-            margin-bottom: 15px;
+
+        .metadata-value {
+            font-size: 12px;
+            color: #000080;
+            font-weight: normal;
         }
-        
+
         .status-badge {
             display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-bottom: 20px;
+            padding: 2px 8px;
+            border: 1px solid #003366;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 4px;
         }
-        
-        .back-button {
+
+        .status-badge.current {
+            background: #CCFFCC;
+            color: #006600;
+            border-color: #006600;
+        }
+
+        .status-badge.outdated {
+            background: #FFFFCC;
+            color: #CC6600;
+            border-color: #CC6600;
+        }
+
+        .filters {
+            padding: 16px;
+            background: #F0F8FF;
+            border-bottom: 1px solid #336699;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-weight: bold;
+            color: #003366;
+            font-size: 12px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid #6699CC;
+            background: #E6F2FF;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: normal;
+            font-family: Arial, sans-serif;
+            color: #003366;
+        }
+
+        .filter-btn:hover {
+            border-color: #003366;
+            background: #CCE5FF;
+        }
+
+        .filter-btn.active {
+            background: #336699;
+            border-color: #003366;
+            color: white;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #6699CC;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #003366;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 0;
+            padding: 0;
+            border-top: 1px solid #B0C4DE;
+        }
+
+        .icon-card {
+            border: 1px solid #B0C4DE;
+            border-top: 0;
+            border-left: 0;
+            padding: 16px;
+            background: white;
+        }
+
+        .icon-card:hover {
+            border-color: #336699;
+            background: #F0F8FF;
+        }
+
+        .icon-preview {
+            width: 64px;
+            height: 64px;
+            background: #6699CC;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            color: white;
+            font-size: 24px;
+            border: 2px solid #003366;
+        }
+
+        .icon-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 8px;
+        }
+
+        .icon-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .icon-detail {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+
+        .icon-detail-label {
+            color: #336699;
+            font-weight: bold;
+        }
+
+        .icon-detail-value {
+            color: #000080;
+            font-family: 'Courier New', monospace;
+            background: #E6F2FF;
+            padding: 2px 6px;
+            border: 1px solid #B0C4DE;
+        }
+
+        .icon-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            background: #E6F2FF;
+            color: #003366;
+            padding: 3px 6px;
+            border: 1px solid #B0C4DE;
+            font-size: 10px;
+            font-weight: normal;
+        }
+
+        .category-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 3px 8px;
+            border: 1px solid #003366;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
-        
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .info-box {
-            background: #f5f5f5;
-            border-left: 4px solid #667eea;
+
+        .category-art { background: #FFE6F0; color: #CC0066; border-color: #CC0066; }
+        .category-navigation { background: #CCE5FF; color: #0066CC; border-color: #0066CC; }
+        .category-social { background: #E6CCFF; color: #6600CC; border-color: #6600CC; }
+        .category-commerce { background: #CCFFCC; color: #006600; border-color: #006600; }
+        .category-action { background: #FFEBCC; color: #CC6600; border-color: #CC6600; }
+        .category-user { background: #CCFFFF; color: #006666; border-color: #006666; }
+        .category-information { background: #FFFFCC; color: #CCCC00; border-color: #999900; }
+
+        .sprite-info {
             padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
+            background: #E6EEF5;
+            border-top: 2px solid #336699;
+        }
+
+        .sprite-info h2 {
+            margin-bottom: 12px;
+            color: #003366;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .sprite-grid-visual {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 1px;
+            background: #B0C4DE;
+            border: 2px solid #336699;
+            max-width: 600px;
+            margin: 12px 0;
+        }
+
+        .sprite-cell {
+            aspect-ratio: 1;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #6699CC;
+            position: relative;
+        }
+
+        .sprite-cell:hover {
+            background: #336699;
+            color: white;
+            cursor: pointer;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #336699;
+        }
+
+        .no-results h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .sprite-specs {
+            margin-top: 12px;
+        }
+
+        .sprite-specs ul {
+            margin-top: 8px;
+            margin-left: 24px;
+            color: #003366;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .icon-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metadata {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="breadcrumb">
-                <a href="index.html">Home</a> / Visual Asset Library [Current Build]
-            </div>
-            <h1>Visual Asset Library [Current Build]</h1>
-            <span class="status-badge">Active Build</span>
+            <h1>Iris Icon Set</h1>
+            <p>Complete icon library viewer and documentation</p>
         </div>
-        
-        <div class="content">
-            <div class="info-box">
-                <h2>Welcome to the Visual Asset Library</h2>
-                <p>This is the current build of the Lou32 Visual Asset Library Federated Data Catalog.</p>
-            </div>
-            
-            <p>The Visual Asset Library provides a comprehensive catalog of visual assets for the Lou32 system. This platform enables browsing, searching, and managing visual assets across the federated data catalog.</p>
-            
-            <p>Features include:</p>
-            <ul style="margin-left: 30px; margin-bottom: 15px;">
-                <li>Asset browsing and search capabilities</li>
-                <li>Metadata management and tagging</li>
-                <li>Version control and history tracking</li>
-                <li>Integration with the Lou32 Asset Spritesheet Assembler</li>
-            </ul>
-            
-            <p>This page will be updated with additional functionality and content as the library continues to develop.</p>
+
+        <div class="metadata" id="metadata">
+            <!-- Metadata will be populated by JavaScript -->
         </div>
-        
-        <a href="index.html" class="back-button">← Back to Home</a>
+
+        <div class="filters">
+            <span class="filter-label">Filter by category:</span>
+            <div class="filter-buttons" id="categoryFilters">
+                <button class="filter-btn active" data-category="all">All</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search icons by name, ID, or tags...">
+            </div>
+        </div>
+
+        <div class="icon-grid" id="iconGrid">
+            <!-- Icons will be populated by JavaScript -->
+        </div>
+
+        <div class="sprite-info">
+            <h2>Sprite Sheet Grid Layout</h2>
+            <p>Visual representation of the sprite sheet grid (9 columns × 3 rows)</p>
+            <div class="sprite-grid-visual" id="spriteGrid">
+                <!-- Grid will be populated by JavaScript -->
+            </div>
+            <div class="sprite-specs">
+                <strong>Grid Specifications:</strong>
+                <ul>
+                    <li>Total Size: <code id="spriteSize">288×96 pixels</code></li>
+                    <li>Icon Size: <code id="iconSize">32×32 pixels</code></li>
+                    <li>Spacing: <code id="spacing">0px</code></li>
+                    <li>Padding: <code id="padding">0px</code></li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // Load icon data
+        let iconData = null;
+        let filteredIcons = [];
+        let currentCategory = 'all';
+
+        // Fetch the JSON data with better error handling
+        async function loadIconData() {
+            try {
+                const response = await fetch('iris-icons.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                iconData = await response.json();
+                initializeViewer();
+            } catch (error) {
+                console.error('Error loading icon data:', error);
+                
+                // Provide helpful error message based on the error type
+                let errorMessage = '<div class="no-results">' +
+                    '<h3>Error loading icon data</h3>' +
+                    '<p><strong>This appears to be a CORS/file access issue.</strong></p>' +
+                    '<p>To view this page, you need to:</p>' +
+                    '<ol style="text-align: left; display: inline-block; margin-top: 10px;">' +
+                    '<li>Run a local web server in this directory, OR</li>' +
+                    '<li>Use the embedded data version below</li>' +
+                    '</ol>' +
+                    '<p style="margin-top: 20px;"><strong>Quick fix - Run this command in the directory:</strong></p>' +
+                    '<p style="background: #E6F2FF; padding: 10px; border: 1px solid #336699; font-family: monospace;">python -m http.server 8000</p>' +
+                    '<p>Then open: <a href="http://localhost:8000/icon-viewer.html" style="color: #0066CC;">http://localhost:8000/icon-viewer.html</a></p>' +
+                    '<p style="margin-top: 20px;"><button onclick="loadEmbeddedData()" style="padding: 10px 20px; background: #336699; color: white; border: 1px solid #003366; cursor: pointer; font-size: 12px; font-family: Arial;">Load Embedded Data Instead</button></p>' +
+                    '</div>';
+                
+                document.getElementById('iconGrid').innerHTML = errorMessage;
+            }
+        }
+        
+        // Load the data
+        loadIconData();
+
+        function initializeViewer() {
+            renderMetadata();
+            renderCategoryFilters();
+            renderSpriteGrid();
+            filterIcons();
+            
+            // Set up search
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                filterIcons(e.target.value);
+            });
+        }
+
+        function renderMetadata() {
+            const metadata = iconData.metadata;
+            const spriteSheet = iconData.spriteSheet;
+            
+            const createdDate = new Date(metadata.created);
+            const modifiedDate = new Date(metadata.modified);
+            const daysSinceModified = Math.floor((new Date() - modifiedDate) / (1000 * 60 * 60 * 24));
+            
+            const statusClass = daysSinceModified < 30 ? 'current' : 'outdated';
+            const statusText = daysSinceModified < 30 ? 'Up to date' : `${daysSinceModified} days old`;
+
+            document.getElementById('metadata').innerHTML = `
+                <div class="metadata-item">
+                    <span class="metadata-label">Icon Set Name</span>
+                    <span class="metadata-value">${metadata.name}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Version</span>
+                    <span class="metadata-value">${iconData.version}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Total Icons</span>
+                    <span class="metadata-value">${metadata.totalIcons}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Author</span>
+                    <span class="metadata-value">${metadata.author}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Created</span>
+                    <span class="metadata-value">${createdDate.toLocaleDateString()}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Last Updated</span>
+                    <span class="metadata-value">
+                        ${modifiedDate.toLocaleDateString()}
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Sprite Sheet</span>
+                    <span class="metadata-value">${spriteSheet.imagePath}</span>
+                </div>
+            `;
+
+            // Update sprite info
+            const { width, height } = spriteSheet.iconSize;
+            const { columns, rows } = spriteSheet.gridDimensions;
+            const totalWidth = columns * width + (columns - 1) * spriteSheet.spacing + 2 * spriteSheet.padding;
+            const totalHeight = rows * height + (rows - 1) * spriteSheet.spacing + 2 * spriteSheet.padding;
+            
+            document.getElementById('spriteSize').textContent = `${totalWidth}×${totalHeight} pixels`;
+            document.getElementById('iconSize').textContent = `${width}×${height} pixels`;
+            document.getElementById('spacing').textContent = `${spriteSheet.spacing}px`;
+            document.getElementById('padding').textContent = `${spriteSheet.padding}px`;
+        }
+
+        function renderCategoryFilters() {
+            const categories = [...new Set(iconData.icons.map(icon => icon.category))].sort();
+            const filtersDiv = document.getElementById('categoryFilters');
+            
+            categories.forEach(category => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                btn.dataset.category = category;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = category;
+                    filterIcons();
+                });
+                filtersDiv.appendChild(btn);
+            });
+        }
+
+        function renderSpriteGrid() {
+            const grid = document.getElementById('spriteGrid');
+            const { columns, rows } = iconData.spriteSheet.gridDimensions;
+            
+            for (let i = 0; i < columns * rows; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'sprite-cell';
+                cell.textContent = i;
+                cell.title = `Index: ${i}`;
+                
+                const icon = iconData.icons.find(icon => icon.index === i);
+                if (icon) {
+                    cell.title = `${i}: ${icon.name}`;
+                }
+                
+                grid.appendChild(cell);
+            }
+        }
+
+        function filterIcons(searchTerm = '') {
+            const icons = iconData.icons;
+            
+            filteredIcons = icons.filter(icon => {
+                const matchesCategory = currentCategory === 'all' || icon.category === currentCategory;
+                const matchesSearch = searchTerm === '' || 
+                    icon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    icon.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    icon.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+                
+                return matchesCategory && matchesSearch;
+            });
+            
+            renderIcons();
+        }
+
+        function renderIcons() {
+            const grid = document.getElementById('iconGrid');
+            
+            if (filteredIcons.length === 0) {
+                grid.innerHTML = '<div class="no-results"><h3>No icons found</h3><p>Try adjusting your filters or search term.</p></div>';
+                return;
+            }
+            
+            grid.innerHTML = filteredIcons.map(icon => `
+                <div class="icon-card">
+                    <div class="icon-preview">
+                        <img src="icons/${icon.id}.png" alt="${icon.name}" style="width: 32px; height: 32px;" onerror="this.style.display='none'; this.parentElement.textContent='${icon.index}';">
+                    </div>
+                    <div class="icon-name">${icon.name}</div>
+                    <span class="category-badge category-${icon.category}">${icon.category}</span>
+                    <div class="icon-details">
+                        <div class="icon-detail">
+                            <span class="icon-detail-label">ID:</span>
+                            <span class="icon-detail-value">${icon.id}</span>
+                        </div>
+                        <div class="icon-detail">
+                            <span class="icon-detail-label">Filename:</span>
+                            <span class="icon-detail-value">${icon.id}.png</span>
+                        </div>
+                        <div class="icon-detail">
+                            <span class="icon-detail-label">CSS Class:</span>
+                            <span class="icon-detail-value">${icon.cssClass}</span>
+                        </div>
+                        <div class="icon-detail">
+                            <span class="icon-detail-label">Position:</span>
+                            <span class="icon-detail-value">x:${icon.position.x}, y:${icon.position.y}</span>
+                        </div>
+                        <div class="icon-detail">
+                            <span class="icon-detail-label">Grid:</span>
+                            <span class="icon-detail-value">R${icon.position.row}, C${icon.position.column}</span>
+                        </div>
+                    </div>
+                    <div class="icon-tags">
+                        ${icon.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Embedded data fallback - loads data directly without fetch
+        function loadEmbeddedData() {
+            iconData = {"version":"1.0.0","metadata":{"name":"Iris Icon Set","description":"Icon set for Iris art platform","author":"Iris Team","created":"2025-10-02T00:00:00Z","modified":"2025-10-02T00:00:00Z","totalIcons":27},"spriteSheet":{"imagePath":"./sprites/iris-icons.png","iconSize":{"width":32,"height":32},"gridDimensions":{"columns":9,"rows":3},"spacing":0,"padding":0},"icons":[{"index":0,"name":"Painting","id":"painting","category":"art","tags":["art","canvas","paint"],"position":{"x":0,"y":0,"row":0,"column":0},"cssClass":"iris-icon-painting","description":"Painting artwork type"},{"index":1,"name":"Sculpture","id":"sculpture","category":"art","tags":["art","3d","sculpture"],"position":{"x":32,"y":0,"row":0,"column":1},"cssClass":"iris-icon-sculpture","description":"Sculpture artwork type"},{"index":2,"name":"Drawing","id":"drawing","category":"art","tags":["art","sketch","pencil"],"position":{"x":64,"y":0,"row":0,"column":2},"cssClass":"iris-icon-drawing","description":"Drawing artwork type"},{"index":3,"name":"Photography","id":"photography","category":"art","tags":["art","photo","camera"],"position":{"x":96,"y":0,"row":0,"column":3},"cssClass":"iris-icon-photography","description":"Photography artwork type"},{"index":4,"name":"Misc art","id":"misc-art","category":"art","tags":["art","other","misc"],"position":{"x":128,"y":0,"row":0,"column":4},"cssClass":"iris-icon-misc-art","description":"Miscellaneous artwork type"},{"index":5,"name":"New artworks","id":"new-artworks","category":"navigation","tags":["new","recent","latest"],"position":{"x":160,"y":0,"row":0,"column":5},"cssClass":"iris-icon-new-artworks","description":"View new artworks"},{"index":6,"name":"My profile","id":"my-profile","category":"navigation","tags":["profile","user","account"],"position":{"x":192,"y":0,"row":0,"column":6},"cssClass":"iris-icon-my-profile","description":"User profile page"},{"index":7,"name":"Sign up","id":"sign-up","category":"navigation","tags":["register","signup","account"],"position":{"x":224,"y":0,"row":0,"column":7},"cssClass":"iris-icon-sign-up","description":"Sign up for new account"},{"index":8,"name":"Explore page","id":"explore-page","category":"navigation","tags":["explore","discover","browse"],"position":{"x":256,"y":0,"row":0,"column":8},"cssClass":"iris-icon-explore-page","description":"Explore artworks page"},{"index":9,"name":"Search bar","id":"search-bar","category":"navigation","tags":["search","find","query"],"position":{"x":0,"y":32,"row":1,"column":0},"cssClass":"iris-icon-search-bar","description":"Search functionality"},{"index":10,"name":"About page","id":"about-page","category":"navigation","tags":["about","info","information"],"position":{"x":32,"y":32,"row":1,"column":1},"cssClass":"iris-icon-about-page","description":"About page"},{"index":11,"name":"Follow","id":"follow","category":"social","tags":["follow","subscribe","social"],"position":{"x":64,"y":32,"row":1,"column":2},"cssClass":"iris-icon-follow","description":"Follow an artist"},{"index":12,"name":"Purchase artwork","id":"purchase-artwork","category":"commerce","tags":["buy","purchase","cart"],"position":{"x":96,"y":32,"row":1,"column":3},"cssClass":"iris-icon-purchase-artwork","description":"Purchase an artwork"},{"index":13,"name":"Message","id":"message","category":"social","tags":["message","chat","communication"],"position":{"x":128,"y":32,"row":1,"column":4},"cssClass":"iris-icon-message","description":"Send a message"},{"index":14,"name":"Artist","id":"artist","category":"user","tags":["artist","creator","user"],"position":{"x":160,"y":32,"row":1,"column":5},"cssClass":"iris-icon-artist","description":"Artist profile or designation"},{"index":15,"name":"Edit","id":"edit","category":"action","tags":["edit","modify","change"],"position":{"x":192,"y":32,"row":1,"column":6},"cssClass":"iris-icon-edit","description":"Edit content"},{"index":16,"name":"Upload","id":"upload","category":"action","tags":["upload","add","submit"],"position":{"x":224,"y":32,"row":1,"column":7},"cssClass":"iris-icon-upload","description":"Upload artwork"},{"index":17,"name":"Favorite/Like","id":"favorite-like","category":"social","tags":["favorite","like","heart"],"position":{"x":256,"y":32,"row":1,"column":8},"cssClass":"iris-icon-favorite-like","description":"Favorite or like an artwork"},{"index":18,"name":"Inbox","id":"inbox","category":"navigation","tags":["inbox","messages","mail"],"position":{"x":0,"y":64,"row":2,"column":0},"cssClass":"iris-icon-inbox","description":"View inbox messages"},{"index":19,"name":"Purchase made","id":"purchase-made","category":"commerce","tags":["purchase","sold","transaction"],"position":{"x":32,"y":64,"row":2,"column":1},"cssClass":"iris-icon-purchase-made","description":"Purchase completed indicator"},{"index":20,"name":"Pinned post","id":"pinned-post","category":"social","tags":["pin","pinned","highlight"],"position":{"x":64,"y":64,"row":2,"column":2},"cssClass":"iris-icon-pinned-post","description":"Pinned post or artwork"},{"index":21,"name":"Guestbook","id":"guestbook","category":"social","tags":["guestbook","comments","visitors"],"position":{"x":96,"y":64,"row":2,"column":3},"cssClass":"iris-icon-guestbook","description":"Guestbook feature"},{"index":22,"name":"Accept offer","id":"accept-offer","category":"commerce","tags":["accept","approve","yes"],"position":{"x":128,"y":64,"row":2,"column":4},"cssClass":"iris-icon-accept-offer","description":"Accept an offer"},{"index":23,"name":"Reject offer","id":"reject-offer","category":"commerce","tags":["reject","decline","no"],"position":{"x":160,"y":64,"row":2,"column":5},"cssClass":"iris-icon-reject-offer","description":"Reject an offer"},{"index":24,"name":"City/Location","id":"city-location","category":"information","tags":["location","place","city"],"position":{"x":192,"y":64,"row":2,"column":6},"cssClass":"iris-icon-city-location","description":"City or location indicator"},{"index":25,"name":"Pin","id":"pin","category":"action","tags":["pin","mark","save"],"position":{"x":224,"y":64,"row":2,"column":7},"cssClass":"iris-icon-pin","description":"Pin an item"},{"index":26,"name":"Shipping","id":"shipping","category":"commerce","tags":["shipping","delivery","transport"],"position":{"x":256,"y":64,"row":2,"column":8},"cssClass":"iris-icon-shipping","description":"Shipping information"}]};
+            initializeViewer();
+        }
+    </script>
 </body>
 </html>
