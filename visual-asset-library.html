@@ -558,7 +558,7 @@
             grid.innerHTML = filteredIcons.map(icon => `
                 <div class="icon-card">
                     <div class="icon-preview">
-                        <img src="icons/${icon.id}.png" alt="${icon.name}" style="width: 32px; height: 32px;" onerror="this.style.display='none'; this.parentElement.textContent='${icon.index}';">
+                        <img src="icons/16x16/${icon.id}.png" alt="${icon.name}" style="width: 32px; height: 32px;" onerror="this.style.display='none'; this.parentElement.textContent='${icon.index}';">
                     </div>
                     <div class="icon-name">${icon.name}</div>
                     <span class="category-badge category-${icon.category}">${icon.category}</span>
