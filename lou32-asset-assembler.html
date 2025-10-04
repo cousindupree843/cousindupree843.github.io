@@ -141,12 +141,20 @@
             border: 2px solid #2e2e2e;
             background: white;
             max-height: 600px;
+            max-width: 100%;
             overflow: auto;
             margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
         canvas {
             display: block;
             image-rendering: pixelated;
+            max-width: 100%;
+            max-height: 600px;
+            height: auto;
+            width: auto;
         }
         .grid-inputs {
             display: inline-flex;
@@ -189,7 +197,6 @@
                     <option value="grid">Grid</option>
                     <option value="vertical">Vertical</option>
                     <option value="horizontal">Horizontal</option>
-                    <option value="bin">Best Fit</option>
                 </select>
             </div>
             
@@ -355,9 +362,6 @@
                     case 'grid':
                         layout = this.layoutGrid(padding);
                         break;
-                    case 'bin':
-                        layout = this.layoutBinPack(padding);
-                        break;
                 }
                 
                 this.render(layout, padding);
@@ -454,82 +458,17 @@
                 };
             }
             
-            layoutBinPack(padding) {
-                const items = this.images.map((img, i) => ({
-                    width: img.img.width + padding,
-                    height: img.img.height + padding,
-                    image: img.img,
-                    name: img.name,
-                    index: i
-                })).sort((a, b) => b.height - a.height);
-                
-                const sprites = [];
-                const shelves = [];
-                let totalWidth = 0;
-                let totalHeight = 0;
-                
-                for (const item of items) {
-                    let placed = false;
-                    
-                    for (const shelf of shelves) {
-                        if (shelf.remainingWidth >= item.width && shelf.height >= item.height) {
-                            sprites.push({
-                                x: shelf.x + shelf.usedWidth,
-                                y: shelf.y,
-                                width: item.image.width,
-                                height: item.image.height,
-                                image: item.image,
-                                name: item.name
-                            });
-                            shelf.usedWidth += item.width;
-                            shelf.remainingWidth -= item.width;
-                            placed = true;
-                            break;
-                        }
-                    }
-                    
-                    if (!placed) {
-                        const newShelf = {
-                            x: padding,
-                            y: totalHeight + padding,
-                            height: item.height,
-                            usedWidth: item.width,
-                            remainingWidth: 2048 - item.width - padding
-                        };
-                        shelves.push(newShelf);
-                        
-                        sprites.push({
-                            x: newShelf.x,
-                            y: newShelf.y,
-                            width: item.image.width,
-                            height: item.image.height,
-                            image: item.image,
-                            name: item.name
-                        });
-                        
-                        totalHeight += item.height;
-                        totalWidth = Math.max(totalWidth, newShelf.usedWidth + padding);
-                    }
-                }
-                
-                return {
-                    width: totalWidth + padding,
-                    height: totalHeight + padding * 2,
-                    sprites
-                };
-            }
+
             
             render(layout, padding) {
+                // Set canvas to full resolution for export
                 this.canvas.width = layout.width;
                 this.canvas.height = layout.height;
-                
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                
                 if (!document.getElementById('transparent').checked) {
                     this.ctx.fillStyle = document.getElementById('bgColor').value;
                     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
                 }
-                
                 this.spriteData = [];
                 for (const sprite of layout.sprites) {
                     this.ctx.drawImage(
@@ -539,7 +478,6 @@
                         sprite.width,
                         sprite.height
                     );
-                    
                     this.spriteData.push({
                         name: sprite.name.replace(/\.[^/.]+$/, ''),
                         x: sprite.x,
@@ -548,6 +486,18 @@
                         height: sprite.height
                     });
                 }
+
+                // --- Preview scaling logic ---
+                // Scale canvas visually to fit container if too large
+                const container = this.canvas.parentElement;
+                const maxW = container.clientWidth || 1200;
+                const maxH = 600;
+                let scale = 1;
+                if (this.canvas.width > maxW || this.canvas.height > maxH) {
+                    scale = Math.min(maxW / this.canvas.width, maxH / this.canvas.height, 1);
+                }
+                this.canvas.style.width = Math.round(this.canvas.width * scale) + 'px';
+                this.canvas.style.height = Math.round(this.canvas.height * scale) + 'px';
             }
             
             updateStats() {
