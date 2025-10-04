@@ -1,0 +1,27 @@
+---
+globs: *.json,*.csv,*.xml,*.ps1
+---
+# Asset Management Guidelines
+
+## File Naming Conventions
+- Icons: Use kebab-case with descriptive names (e.g., `icon-painting-16.png`)
+- JSON files: Use descriptive names with version indicators
+- PowerShell scripts: Use descriptive names with clear purpose
+
+## Metadata Structure
+- Maintain consistent JSON schema for icon data
+- Include position, category, tags, and CSS class information
+- Track creation and modification dates
+- Provide sprite sheet specifications (dimensions, spacing, padding)
+
+## Sprite Sheet Generation
+- Support multiple resolutions (16x16, 32x32, 48x48, 64x64)
+- Generate multiple format outputs (CSV, JSON, XML)
+- Maintain grid-based positioning system
+- Include visual grid representation for debugging
+
+## PowerShell Scripts
+- Use parameter validation with Mandatory flags
+- Implement error handling and progress reporting
+- Support batch operations for multiple files
+- Provide clear console output for user feedback

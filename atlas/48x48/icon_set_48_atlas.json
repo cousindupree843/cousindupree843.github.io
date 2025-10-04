@@ -14,38 +14,38 @@
     "rows": 6,
     "count": 27,
     "order": [
-      "icon-painting-16.png",
-      "icon-sculpture-16.png",
-      "icon-drawing-16.png",
-      "icon-photography-16.png",
-      "icon-misc-art-16.png",
-      "icon-new-works-16.png",
-      "icon-my-profile-16.png",
-      "icon-sign-up-16.png",
-      "icon-explore-page-16.png",
-      "icon-search-bar-16.png",
-      "icon-about-page-16.png",
-      "icon-follow-16.png",
-      "icon-purchase-artwork-16.png",
-      "icon-message-16.png",
-      "icon-artist-16.png",
-      "icon-edit-16.png",
-      "icon-upload-16.png",
-      "icon-favorite-like-16.png",
-      "icon-inbox-16.png",
-      "icon-purchase-made-16.png",
-      "icon-pinned-post-16.png",
-      "icon-guestbook-16.png",
-      "icon-accept-offer-16.png",
-      "icon-reject-offer-16.png",
-      "icon-city-location-16.png",
-      "icon-pin-16.png",
-      "icon-shipping-16.png"
+      "icon-painting-48.png",
+      "icon-sculpture-48.png",
+      "icon-drawing-48.png",
+      "icon-photography-48.png",
+      "icon-misc-art-48.png",
+      "icon-new-works-48.png",
+      "icon-my-profile-48.png",
+      "icon-sign-up-48.png",
+      "icon-explore-page-48.png",
+      "icon-search-bar-48.png",
+      "icon-about-page-48.png",
+      "icon-follow-48.png",
+      "icon-purchase-artwork-48.png",
+      "icon-message-48.png",
+      "icon-artist-48.png",
+      "icon-edit-48.png",
+      "icon-upload-48.png",
+      "icon-favorite-like-48.png",
+      "icon-inbox-48.png",
+      "icon-purchase-made-48.png",
+      "icon-pinned-post-48.png",
+      "icon-guestbook-48.png",
+      "icon-accept-offer-48.png",
+      "icon-reject-offer-48.png",
+      "icon-city-location-48.png",
+      "icon-pin-48.png",
+      "icon-shipping-48.png"
     ]
   },
   "frames": [
     {
-      "name": "icon-painting-16",
+      "name": "icon-painting-48",
       "index": 0,
       "row": 0,
       "col": 0,
@@ -55,7 +55,7 @@
       "h": 48
     },
     {
-      "name": "icon-sculpture-16",
+      "name": "icon-sculpture-48",
       "index": 1,
       "row": 0,
       "col": 1,
@@ -65,7 +65,7 @@
       "h": 48
     },
     {
-      "name": "icon-drawing-16",
+      "name": "icon-drawing-48",
       "index": 2,
       "row": 0,
       "col": 2,
@@ -75,7 +75,7 @@
       "h": 48
     },
     {
-      "name": "icon-photography-16",
+      "name": "icon-photography-48",
       "index": 3,
       "row": 0,
       "col": 3,
@@ -85,7 +85,7 @@
       "h": 48
     },
     {
-      "name": "icon-misc-art-16",
+      "name": "icon-misc-art-48",
       "index": 4,
       "row": 0,
       "col": 4,
@@ -95,7 +95,7 @@
       "h": 48
     },
     {
-      "name": "icon-new-works-16",
+      "name": "icon-new-works-48",
       "index": 5,
       "row": 1,
       "col": 0,
@@ -105,7 +105,7 @@
       "h": 48
     },
     {
-      "name": "icon-my-profile-16",
+      "name": "icon-my-profile-48",
       "index": 6,
       "row": 1,
       "col": 1,
@@ -115,7 +115,7 @@
       "h": 48
     },
     {
-      "name": "icon-sign-up-16",
+      "name": "icon-sign-up-48",
       "index": 7,
       "row": 1,
       "col": 2,
@@ -125,7 +125,7 @@
       "h": 48
     },
     {
-      "name": "icon-explore-page-16",
+      "name": "icon-explore-page-48",
       "index": 8,
       "row": 1,
       "col": 3,
@@ -135,7 +135,7 @@
       "h": 48
     },
     {
-      "name": "icon-search-bar-16",
+      "name": "icon-search-bar-48",
       "index": 9,
       "row": 1,
       "col": 4,
@@ -145,7 +145,7 @@
       "h": 48
     },
     {
-      "name": "icon-about-page-16",
+      "name": "icon-about-page-48",
       "index": 10,
       "row": 2,
       "col": 0,
@@ -155,7 +155,7 @@
       "h": 48
     },
     {
-      "name": "icon-follow-16",
+      "name": "icon-follow-48",
       "index": 11,
       "row": 2,
       "col": 1,
@@ -165,7 +165,7 @@
       "h": 48
     },
     {
-      "name": "icon-purchase-artwork-16",
+      "name": "icon-purchase-artwork-48",
       "index": 12,
       "row": 2,
       "col": 2,
@@ -175,7 +175,7 @@
       "h": 48
     },
     {
-      "name": "icon-message-16",
+      "name": "icon-message-48",
       "index": 13,
       "row": 2,
       "col": 3,
@@ -185,7 +185,7 @@
       "h": 48
     },
     {
-      "name": "icon-artist-16",
+      "name": "icon-artist-48",
       "index": 14,
       "row": 2,
       "col": 4,
@@ -195,7 +195,7 @@
       "h": 48
     },
     {
-      "name": "icon-edit-16",
+      "name": "icon-edit-48",
       "index": 15,
       "row": 3,
       "col": 0,
@@ -205,7 +205,7 @@
       "h": 48
     },
     {
-      "name": "icon-upload-16",
+      "name": "icon-upload-48",
       "index": 16,
       "row": 3,
       "col": 1,
@@ -215,7 +215,7 @@
       "h": 48
     },
     {
-      "name": "icon-favorite-like-16",
+      "name": "icon-favorite-like-48",
       "index": 17,
       "row": 3,
       "col": 2,
@@ -225,7 +225,7 @@
       "h": 48
     },
     {
-      "name": "icon-inbox-16",
+      "name": "icon-inbox-48",
       "index": 18,
       "row": 3,
       "col": 3,
@@ -235,7 +235,7 @@
       "h": 48
     },
     {
-      "name": "icon-purchase-made-16",
+      "name": "icon-purchase-made-48",
       "index": 19,
       "row": 3,
       "col": 4,
@@ -245,7 +245,7 @@
       "h": 48
     },
     {
-      "name": "icon-pinned-post-16",
+      "name": "icon-pinned-post-48",
       "index": 20,
       "row": 4,
       "col": 0,
@@ -255,7 +255,7 @@
       "h": 48
     },
     {
-      "name": "icon-guestbook-16",
+      "name": "icon-guestbook-48",
       "index": 21,
       "row": 4,
       "col": 1,
@@ -265,7 +265,7 @@
       "h": 48
     },
     {
-      "name": "icon-accept-offer-16",
+      "name": "icon-accept-offer-48",
       "index": 22,
       "row": 4,
       "col": 2,
@@ -275,7 +275,7 @@
       "h": 48
     },
     {
-      "name": "icon-reject-offer-16",
+      "name": "icon-reject-offer-48",
       "index": 23,
       "row": 4,
       "col": 3,
@@ -285,7 +285,7 @@
       "h": 48
     },
     {
-      "name": "icon-city-location-16",
+      "name": "icon-city-location-48",
       "index": 24,
       "row": 4,
       "col": 4,
@@ -295,7 +295,7 @@
       "h": 48
     },
     {
-      "name": "icon-pin-16",
+      "name": "icon-pin-48",
       "index": 25,
       "row": 5,
       "col": 0,
@@ -305,7 +305,7 @@
       "h": 48
     },
     {
-      "name": "icon-shipping-16",
+      "name": "icon-shipping-48",
       "index": 26,
       "row": 5,
       "col": 1,
