@@ -413,10 +413,8 @@
                     '</ol>' +
                     '<p style="margin-top: 20px;"><strong>Quick fix - Run this command in the directory:</strong></p>' +
                     '<p style="background: #E6F2FF; padding: 10px; border: 1px solid #336699; font-family: monospace;">python -m http.server 8000</p>' +
-                    '<p>Then open: <a href="http://localhost:8000/icon-viewer.html" style="color: #0066CC;">http://localhost:8000/icon-viewer.html</a></p>' +
-                    '<p style="margin-top: 20px;"><button onclick="loadEmbeddedData()" style="padding: 10px 20px; background: #336699; color: white; border: 1px solid #003366; cursor: pointer; font-size: 12px; font-family: Arial;">Load Embedded Data Instead</button></p>' +
+                    '<p>Then open: <a href="http://localhost:8000/visual-asset-library.html" style="color: #0066CC;">http://localhost:8000/visual-asset-library.html</a></p>' +
                     '</div>';
-                
                 document.getElementById('iconGrid').innerHTML = errorMessage;
             }
         }
@@ -562,7 +560,7 @@
             grid.innerHTML = filteredIcons.map(icon => `
                 <div class="icon-card">
                     <div class="icon-preview">
-                        <img src="icons/16x16/${icon.id}.png" alt="${icon.name}" style="width: 32px; height: 32px;" onerror="this.style.display='none'; this.parentElement.textContent='${icon.index}';">
+                        <img src="icons/16x16/${icon.name}.png" alt="${icon.name}" style="width: 32px; height: 32px;" onerror="this.style.display='none'; this.parentElement.textContent='${icon.index}';">
                     </div>
                     <div class="icon-name">${icon.name}</div>
                     <span class="category-badge category-${icon.category}">${icon.category}</span>
@@ -573,7 +571,7 @@
                         </div>
                         <div class="icon-detail">
                             <span class="icon-detail-label">Filename:</span>
-                            <span class="icon-detail-value">${icon.id}.png</span>
+                            <span class="icon-detail-value">${icon.name}.png</span>
                         </div>
                         <div class="icon-detail">
                             <span class="icon-detail-label">CSS Class:</span>
