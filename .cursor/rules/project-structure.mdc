@@ -1,0 +1,25 @@
+---
+alwaysApply: true
+---
+# Project Structure Guide
+
+This is a Visual Asset Library (VAL) project for managing icon sets and sprite sheets. The main components are:
+
+## Core Files
+- [index.html](mdc:index.html) - Main portal page with navigation to tools
+- [visual-asset-library.html](mdc:visual-asset-library.html) - Interactive icon catalog viewer
+- [lou32-asset-assembler.html](mdc:lou32-asset-assembler.html) - Spritesheet assembly utility
+
+## Asset Organization
+- `icons/16x16/` - Individual 16x16 pixel icon files
+- `atlas/` - Generated sprite sheet atlases in multiple resolutions (16x16, 32x32, 48x48, 64x64)
+- Each atlas contains: CSV, JSON, XML metadata and PNG spritesheet
+
+## Utilities
+- [Rename-Icons.ps1](mdc:Rename-Icons.ps1) - PowerShell script for batch renaming icons based on JSON configuration
+
+## Key Features
+- Interactive icon browsing with filtering and search
+- Sprite sheet generation and visualization
+- Multiple resolution support
+- Metadata-driven asset management

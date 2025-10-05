@@ -1,0 +1,30 @@
+---
+alwaysApply: true
+---
+# Development Workflow
+
+## Local Development
+- Use local web server for development (Python: `python -m http.server 8000`)
+- Test all interactive features in browser
+- Validate JSON data structure before deployment
+- Check responsive design on multiple screen sizes
+
+## Asset Pipeline
+1. Create individual icon files in `icons/16x16/`
+2. Use [Rename-Icons.ps1](mdc:Rename-Icons.ps1) for batch renaming
+3. Generate sprite sheets using the assembler utility
+4. Update JSON metadata files
+5. Test in [visual-asset-library.html](mdc:visual-asset-library.html)
+
+## Quality Assurance
+- Verify all icons load correctly
+- Test search and filtering functionality
+- Ensure metadata accuracy
+- Validate sprite sheet positioning
+- Check cross-browser compatibility
+
+## Deployment
+- Commit changes to git repository
+- Push to GitHub Pages for automatic deployment
+- Verify live site functionality
+- Update documentation as needed

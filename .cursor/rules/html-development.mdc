@@ -1,0 +1,28 @@
+---
+globs: *.html
+---
+# HTML Development Guidelines
+
+## Styling Standards
+- Use consistent color scheme: #003366 (dark blue), #6699CC (light blue), #E6EEF5 (light gray)
+- Maintain 12px base font size with Arial font family
+- Use CSS Grid for layouts, especially for icon grids and metadata sections
+- Implement responsive design with mobile-first approach
+
+## Component Structure
+- Header sections with dark blue background (#003366)
+- Metadata sections with light gray background (#E6EEF5)
+- Interactive elements with hover states and transitions
+- Status badges for visual indicators
+
+## JavaScript Integration
+- Use async/await for data loading
+- Implement error handling with user-friendly messages
+- Provide fallback data for offline viewing
+- Use event delegation for dynamic content
+
+## Accessibility
+- Include proper alt text for images
+- Use semantic HTML structure
+- Ensure keyboard navigation support
+- Maintain color contrast ratios

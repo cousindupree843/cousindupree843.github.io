@@ -1,0 +1,36 @@
+---
+description: Guidelines for working with the icon catalog system
+---
+# Icon Catalog System
+
+## Icon Categories
+- **art**: Painting, sculpture, drawing, photography, misc art
+- **navigation**: New artworks, profile, sign up, explore, search, about, inbox
+- **social**: Follow, message, favorite/like, pinned post, guestbook
+- **commerce**: Purchase artwork, purchase made, accept/reject offer, shipping
+- **action**: Edit, upload, pin
+- **user**: Artist profiles
+- **information**: City/location indicators
+
+## Icon Data Structure
+Each icon should include:
+- `index`: Grid position (0-based)
+- `name`: Human-readable name
+- `id`: Unique identifier (kebab-case)
+- `category`: Functional category
+- `tags`: Array of descriptive tags
+- `position`: x, y coordinates and row, column
+- `cssClass`: CSS class name for styling
+- `description`: Brief description
+
+## Grid System
+- 9 columns × 3 rows layout
+- 32×32 pixel icons with 0px spacing
+- Total sprite sheet: 288×96 pixels
+- Position tracking for both pixel coordinates and grid positions
+
+## Filtering and Search
+- Category-based filtering with active state management
+- Text search across name, ID, and tags
+- Real-time filtering with debounced input
+- Visual feedback for active filters
