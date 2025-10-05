@@ -5,7 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Asset Library</title>
     <style>
-        /* Your existing CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+        }
+        
+        .filters {
+            background-color: #E6EEF5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .filters label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .filters select {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        
+        .icon-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .icon-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .icon-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #fafafa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .icon-preview img {
+            display: block;
+        }
+        
+        .icon-name {
+            font-size: 12px;
+            color: #333;
+            word-break: break-word;
+        }
+        
+        .placeholder {
+            background-color: #e0e0e0;
+            border: 2px dashed #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ffcdd2;
+            text-align: center;
+        }
+        
+        .warning {
+            background-color: #fff3e0;
+            color: #ef6c00;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ffcc02;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #4caf50;
+            color: white;
+            font-size: 8px;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .status-badge.missing {
+            background: #f44336;
+        }
+        
+        .status-badge.error {
+            background: #ff9800;
+        }
     </style>
 </head>
 <body>
@@ -15,7 +152,6 @@
             <p>Complete icon library viewer and documentation</p>
         </div>
 
-        <!-- Add a dropdown to select icon size -->
         <div class="filters">
             <label for="iconSizeSelector">Select Icon Size:</label>
             <select id="iconSizeSelector">
@@ -26,6 +162,7 @@
             </select>
         </div>
 
+        <div id="statusMessage"></div>
         <div class="icon-grid" id="iconGrid">
             <!-- Icons will be populated dynamically -->
         </div>
@@ -33,22 +170,157 @@
 
     <script>
         let iconData = null;
+        let currentSize = null;
 
-        // Fetch JSON data based on selected size
+        // Show status message
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.innerHTML = `<div class="${type}">${message}</div>`;
+        }
+
+        // Clear status message
+        function clearStatus() {
+            document.getElementById('statusMessage').innerHTML = '';
+        }
+
+        // Create placeholder for missing icons
+        function createPlaceholder(icon, size) {
+            return `
+                <div class="placeholder" style="width: ${size}px; height: ${size}px;">
+                    <div>
+                        <div>Missing</div>
+                        <div style="font-size: 8px;">${icon.name}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Test if image loads successfully
+        function testImageLoad(src) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = src;
+            });
+        }
+
+        // Fetch JSON data with multiple fallback strategies
         async function loadIconData(size) {
-            try {
-                const filePath = `atlas/${size}/icon_set_${size}_atlas.json`;
-                const response = await fetch(filePath);
+            currentSize = size;
+            clearStatus();
+            
+            // Show loading state
+            document.getElementById("iconGrid").innerHTML = '<div class="loading">Loading icons...</div>';
 
-                if (!response.ok) {
-                    throw new Error(`Failed to load ${filePath}: ${response.status}`);
+            try {
+                // Try multiple file naming patterns
+                const possiblePaths = [
+                    `atlas/${size}/icon_set_${size}_atlas.json`,
+                    `atlas/${size}/icon_set_v2_atlas.json`,
+                    `atlas/${size}/icon_set_atlas.json`
+                ];
+
+                let response = null;
+                let filePath = null;
+
+                // Try each possible path
+                for (const path of possiblePaths) {
+                    try {
+                        response = await fetch(path);
+                        if (response.ok) {
+                            filePath = path;
+                            break;
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+
+                if (!response || !response.ok) {
+                    throw new Error(`No valid atlas file found for ${size}`);
                 }
 
                 iconData = await response.json();
-                renderIcons();
+                
+                // Validate the data structure
+                if (!iconData.frames || !Array.isArray(iconData.frames)) {
+                    throw new Error('Invalid atlas data structure');
+                }
+
+                await renderIconsWithValidation();
+                
             } catch (error) {
                 console.error("Error loading icon data:", error);
-                document.getElementById("iconGrid").innerHTML = `<div class="error">Failed to load icons for ${size}. Please try again.</div>`;
+                showStatus(`Failed to load icons for ${size}. ${error.message}`, 'error');
+                document.getElementById("iconGrid").innerHTML = `
+                    <div class="error">
+                        <h3>Unable to load icon data</h3>
+                        <p>Error: ${error.message}</p>
+                        <p>Please check that the atlas files exist and are properly formatted.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render icons with validation and error handling
+        async function renderIconsWithValidation() {
+            const iconGrid = document.getElementById("iconGrid");
+            iconGrid.innerHTML = ""; // Clear existing icons
+
+            if (!iconData || !iconData.frames) {
+                showStatus('No icon data available', 'error');
+                return;
+            }
+
+            let loadedCount = 0;
+            let missingCount = 0;
+            const totalIcons = iconData.frames.length;
+
+            // Process each icon
+            for (const icon of iconData.frames) {
+                const iconCard = document.createElement("div");
+                iconCard.className = "icon-card";
+
+                // Create the sprite sheet image source
+                const spriteSheetPath = `atlas/${currentSize}/${iconData.meta.image}`;
+                
+                // Test if the sprite sheet exists
+                const spriteSheetExists = await testImageLoad(spriteSheetPath);
+                
+                if (spriteSheetExists) {
+                    // Create the icon display
+                    iconCard.innerHTML = `
+                        <div class="icon-preview" style="width: ${icon.w}px; height: ${icon.h}px;">
+                            <img src="${spriteSheetPath}" 
+                                 style="object-position: -${icon.x}px -${icon.y}px; width: ${iconData.meta.size.w}px; height: ${iconData.meta.size.h}px;"
+                                 alt="${icon.name}"
+                                 onerror="this.parentElement.innerHTML='${createPlaceholder(icon, icon.w)}'">
+                            <div class="status-badge">✓</div>
+                        </div>
+                        <div class="icon-name">${icon.name}</div>
+                    `;
+                    loadedCount++;
+                } else {
+                    // Show placeholder for missing sprite sheet
+                    iconCard.innerHTML = `
+                        <div class="icon-preview" style="width: ${icon.w}px; height: ${icon.h}px;">
+                            ${createPlaceholder(icon, icon.w)}
+                            <div class="status-badge missing">✗</div>
+                        </div>
+                        <div class="icon-name">${icon.name}</div>
+                    `;
+                    missingCount++;
+                }
+
+                iconGrid.appendChild(iconCard);
+            }
+
+            // Show summary status
+            if (missingCount > 0) {
+                showStatus(`Loaded ${loadedCount} icons, ${missingCount} missing or broken`, 'warning');
+            } else {
+                showStatus(`Successfully loaded ${loadedCount} icons`, 'info');
             }
         }
 
@@ -57,28 +329,6 @@
             const selectedSize = event.target.value;
             loadIconData(selectedSize);
         });
-
-        // Render icons in the grid
-        function renderIcons() {
-            const iconGrid = document.getElementById("iconGrid");
-            iconGrid.innerHTML = ""; // Clear existing icons
-
-            iconData.frames.forEach((icon) => {
-                const iconCard = document.createElement("div");
-                iconCard.className = "icon-card";
-
-                iconCard.innerHTML = `
-                    <div class="icon-preview" style="width: ${icon.w}px; height: ${icon.h}px;">
-                        <img src="atlas/${iconData.meta.image}" 
-                             style="object-position: -${icon.x}px -${icon.y}px; width: ${iconData.meta.size.w}px; height: ${iconData.meta.size.h}px;"
-                             alt="${icon.name}">
-                    </div>
-                    <div class="icon-name">${icon.name}</div>
-                `;
-
-                iconGrid.appendChild(iconCard);
-            });
-        }
 
         // Load default size on page load
         document.addEventListener("DOMContentLoaded", () => {
