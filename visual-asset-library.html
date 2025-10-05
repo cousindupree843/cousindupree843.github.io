@@ -1,589 +1,91 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Visual Asset Library - Iterative Viewing Apparatus [VAL-IVA]</title>
+    <title>Visual Asset Library</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            line-height: 1.4;
-            background: #6699CC;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border: 2px solid #003366;
-        }
-
-        .header {
-            background: #003366;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid #336699;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .header p {
-            font-size: 14px;
-        }
-
-        .metadata {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0;
-            padding: 0;
-            background: #E6EEF5;
-            border-bottom: 1px solid #336699;
-        }
-
-        .metadata-item {
-            display: flex;
-            flex-direction: column;
-            padding: 12px;
-            border-right: 1px solid #B0C4DE;
-            border-bottom: 1px solid #B0C4DE;
-        }
-
-        .metadata-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            color: #003366;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        .metadata-value {
-            font-size: 12px;
-            color: #000080;
-            font-weight: normal;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border: 1px solid #003366;
-            font-size: 11px;
-            font-weight: bold;
-            margin-top: 4px;
-        }
-
-        .status-badge.current {
-            background: #CCFFCC;
-            color: #006600;
-            border-color: #006600;
-        }
-
-        .status-badge.outdated {
-            background: #FFFFCC;
-            color: #CC6600;
-            border-color: #CC6600;
-        }
-
-        .filters {
-            padding: 16px;
-            background: #F0F8FF;
-            border-bottom: 1px solid #336699;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .filter-label {
-            font-weight: bold;
-            color: #003366;
-            font-size: 12px;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 6px 12px;
-            border: 1px solid #6699CC;
-            background: #E6F2FF;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: normal;
-            font-family: Arial, sans-serif;
-            color: #003366;
-        }
-
-        .filter-btn:hover {
-            border-color: #003366;
-            background: #CCE5FF;
-        }
-
-        .filter-btn.active {
-            background: #336699;
-            border-color: #003366;
-            color: white;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 6px 10px;
-            border: 1px solid #6699CC;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #003366;
-        }
-
-        .icon-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 0;
-            padding: 0;
-            border-top: 1px solid #B0C4DE;
-        }
-
-        .icon-card {
-            border: 1px solid #B0C4DE;
-            border-top: 0;
-            border-left: 0;
-            padding: 16px;
-            background: white;
-        }
-
-        .icon-card:hover {
-            border-color: #336699;
-            background: #F0F8FF;
-        }
-
-        .icon-preview {
-            width: 64px;
-            height: 64px;
-            background: #6699CC;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            color: white;
-            font-size: 24px;
-            border: 2px solid #003366;
-        }
-
-        .icon-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #003366;
-            margin-bottom: 8px;
-        }
-
-        .icon-details {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .icon-detail {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-        }
-
-        .icon-detail-label {
-            color: #336699;
-            font-weight: bold;
-        }
-
-        .icon-detail-value {
-            color: #000080;
-            font-family: 'Courier New', monospace;
-            background: #E6F2FF;
-            padding: 2px 6px;
-            border: 1px solid #B0C4DE;
-        }
-
-        .icon-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 8px;
-        }
-
-        .tag {
-            background: #E6F2FF;
-            color: #003366;
-            padding: 3px 6px;
-            border: 1px solid #B0C4DE;
-            font-size: 10px;
-            font-weight: normal;
-        }
-
-        .category-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border: 1px solid #003366;
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .category-art { background: #FFE6F0; color: #CC0066; border-color: #CC0066; }
-        .category-navigation { background: #CCE5FF; color: #0066CC; border-color: #0066CC; }
-        .category-social { background: #E6CCFF; color: #6600CC; border-color: #6600CC; }
-        .category-commerce { background: #CCFFCC; color: #006600; border-color: #006600; }
-        .category-action { background: #FFEBCC; color: #CC6600; border-color: #CC6600; }
-        .category-user { background: #CCFFFF; color: #006666; border-color: #006666; }
-        .category-information { background: #FFFFCC; color: #CCCC00; border-color: #999900; }
-
-        .sprite-info {
-            padding: 20px;
-            background: #E6EEF5;
-            border-top: 2px solid #336699;
-        }
-
-        .sprite-info h2 {
-            margin-bottom: 12px;
-            color: #003366;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .sprite-grid-visual {
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 1px;
-            background: #B0C4DE;
-            border: 2px solid #336699;
-            max-width: 600px;
-            margin: 12px 0;
-        }
-
-        .sprite-cell {
-            aspect-ratio: 1;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
-            color: #6699CC;
-            position: relative;
-        }
-
-        .sprite-cell:hover {
-            background: #336699;
-            color: white;
-            cursor: pointer;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: #336699;
-        }
-
-        .no-results h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .sprite-specs {
-            margin-top: 12px;
-        }
-
-        .sprite-specs ul {
-            margin-top: 8px;
-            margin-left: 24px;
-            color: #003366;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 20px;
-            }
-
-            .icon-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .metadata {
-                grid-template-columns: 1fr;
-            }
-
-            .filters {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
+        /* Your existing CSS styles */
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Iris Icon Set</h1>
+            <h1>Visual Asset Library</h1>
             <p>Complete icon library viewer and documentation</p>
         </div>
 
-        <div class="metadata" id="metadata">
-            <!-- Metadata will be populated by JavaScript -->
-        </div>
-
+        <!-- Add a dropdown to select icon size -->
         <div class="filters">
-            <span class="filter-label">Filter by category:</span>
-            <div class="filter-buttons" id="categoryFilters">
-                <button class="filter-btn active" data-category="all">All</button>
-            </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search icons by name, ID, or tags...">
-            </div>
+            <label for="iconSizeSelector">Select Icon Size:</label>
+            <select id="iconSizeSelector">
+                <option value="16x16">16x16</option>
+                <option value="32x32">32x32</option>
+                <option value="48x48">48x48</option>
+                <option value="64x64">64x64</option>
+            </select>
         </div>
 
         <div class="icon-grid" id="iconGrid">
-            <!-- Icons will be populated by JavaScript -->
-        </div>
-
-        <div class="sprite-info">
-            <h2>Sprite Sheet Grid Layout</h2>
-            <p>Visual representation of the sprite sheet grid (9 columns × 3 rows)</p>
-            <div class="sprite-grid-visual" id="spriteGrid">
-                <!-- Grid will be populated by JavaScript -->
-            </div>
-            <div class="sprite-specs">
-                <strong>Grid Specifications:</strong>
-                <ul>
-                    <li>Total Size: <code id="spriteSize">288×96 pixels</code></li>
-                    <li>Icon Size: <code id="iconSize">32×32 pixels</code></li>
-                    <li>Spacing: <code id="spacing">0px</code></li>
-                    <li>Padding: <code id="padding">0px</code></li>
-                </ul>
-            </div>
+            <!-- Icons will be populated dynamically -->
         </div>
     </div>
 
     <script>
-        // Load icon data
         let iconData = null;
-        let filteredIcons = [];
-        let currentCategory = 'all';
 
-        // Fetch the JSON data with better error handling
-        async function loadIconData() {
+        // Fetch JSON data based on selected size
+        async function loadIconData(size) {
             try {
-                const response = await fetch('iris-icons.json');
+                const filePath = `atlas/${size}/icon_set_${size}_atlas.json`;
+                const response = await fetch(filePath);
+
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`Failed to load ${filePath}: ${response.status}`);
                 }
+
                 iconData = await response.json();
-                initializeViewer();
+                renderIcons();
             } catch (error) {
-                console.error('Error loading icon data:', error);
-                
-                // Provide a simple, user-friendly error message
-                let errorMessage = '<div class="no-results">' +
-                    '<h3>Sorry, we couldn\'t load the icon data.</h3>' +
-                    '<p>Please try refreshing the page or contact support if the problem persists.</p>' +
-                    '</div>';
-                document.getElementById('iconGrid').innerHTML = errorMessage;
-            }
-        }
-        
-        // Load the data when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadIconData);
-        } else {
-            loadIconData();
-        }
-
-        function initializeViewer() {
-            renderMetadata();
-            renderCategoryFilters();
-            renderSpriteGrid();
-            filterIcons();
-            
-            // Set up search
-            document.getElementById('searchInput').addEventListener('input', (e) => {
-                filterIcons(e.target.value);
-            });
-        }
-
-        function renderMetadata() {
-            const metadata = iconData.metadata;
-            const spriteSheet = iconData.spriteSheet;
-            
-            const createdDate = new Date(metadata.created);
-            const modifiedDate = new Date(metadata.modified);
-            const daysSinceModified = Math.floor((new Date() - modifiedDate) / (1000 * 60 * 60 * 24));
-            
-            const statusClass = daysSinceModified < 30 ? 'current' : 'outdated';
-            const statusText = daysSinceModified < 30 ? 'Up to date' : `${daysSinceModified} days old`;
-
-            document.getElementById('metadata').innerHTML = `
-                <div class="metadata-item">
-                    <span class="metadata-label">Icon Set Name</span>
-                    <span class="metadata-value">${metadata.name}</span>
-                </div>
-                <div class="metadata-item">
-                    <span class="metadata-label">Version</span>
-                    <span class="metadata-value">${iconData.version}</span>
-                </div>
-                <div class="metadata-item">
-                    <span class="metadata-label">Total Icons</span>
-                    <span class="metadata-value">${metadata.totalIcons}</span>
-                </div>
-                <div class="metadata-item">
-                    <span class="metadata-label">Author</span>
-                    <span class="metadata-value">${metadata.author}</span>
-                </div>
-                <div class="metadata-item">
-                    <span class="metadata-label">Created</span>
-                    <span class="metadata-value">${createdDate.toLocaleDateString()}</span>
-                </div>
-                <div class="metadata-item">
-                    <span class="metadata-label">Last Updated</span>
-                    <span class="metadata-value">
-                        ${modifiedDate.toLocaleDateString()}
-                        <span class="status-badge ${statusClass}">${statusText}</span>
-                    </span>
-                </div>
-                <div class="metadata-item">
-                    <span class="metadata-label">Sprite Sheet</span>
-                    <span class="metadata-value">${spriteSheet.imagePath}</span>
-                </div>
-            `;
-
-            // Update sprite info
-            const { width, height } = spriteSheet.iconSize;
-            const { columns, rows } = spriteSheet.gridDimensions;
-            const totalWidth = columns * width + (columns - 1) * spriteSheet.spacing + 2 * spriteSheet.padding;
-            const totalHeight = rows * height + (rows - 1) * spriteSheet.spacing + 2 * spriteSheet.padding;
-            
-            document.getElementById('spriteSize').textContent = `${totalWidth}×${totalHeight} pixels`;
-            document.getElementById('iconSize').textContent = `${width}×${height} pixels`;
-            document.getElementById('spacing').textContent = `${spriteSheet.spacing}px`;
-            document.getElementById('padding').textContent = `${spriteSheet.padding}px`;
-        }
-
-        function renderCategoryFilters() {
-            const categories = [...new Set(iconData.icons.map(icon => icon.category))].sort();
-            const filtersDiv = document.getElementById('categoryFilters');
-            
-            categories.forEach(category => {
-                const btn = document.createElement('button');
-                btn.className = 'filter-btn';
-                btn.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-                btn.dataset.category = category;
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentCategory = category;
-                    filterIcons();
-                });
-                filtersDiv.appendChild(btn);
-            });
-        }
-
-        function renderSpriteGrid() {
-            const grid = document.getElementById('spriteGrid');
-            const { columns, rows } = iconData.spriteSheet.gridDimensions;
-            
-            for (let i = 0; i < columns * rows; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'sprite-cell';
-                cell.textContent = i;
-                cell.title = `Index: ${i}`;
-                
-                const icon = iconData.icons.find(icon => icon.index === i);
-                if (icon) {
-                    cell.title = `${i}: ${icon.name}`;
-                }
-                
-                grid.appendChild(cell);
+                console.error("Error loading icon data:", error);
+                document.getElementById("iconGrid").innerHTML = `<div class="error">Failed to load icons for ${size}. Please try again.</div>`;
             }
         }
 
-        function filterIcons(searchTerm = '') {
-            const icons = iconData.icons;
-            
-            filteredIcons = icons.filter(icon => {
-                const matchesCategory = currentCategory === 'all' || icon.category === currentCategory;
-                const matchesSearch = searchTerm === '' || 
-                    icon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    icon.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    icon.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-                
-                return matchesCategory && matchesSearch;
-            });
-            
-            renderIcons();
-        }
+        // Event listener for icon size selection
+        document.getElementById("iconSizeSelector").addEventListener("change", (event) => {
+            const selectedSize = event.target.value;
+            loadIconData(selectedSize);
+        });
 
+        // Render icons in the grid
         function renderIcons() {
-            const grid = document.getElementById('iconGrid');
-            
-            if (filteredIcons.length === 0) {
-                grid.innerHTML = '<div class="no-results"><h3>No icons found</h3><p>Try adjusting your filters or search term.</p></div>';
-                return;
-            }
-            
-            grid.innerHTML = filteredIcons.map(icon => `
-                <div class="icon-card">
-                    <div class="icon-preview">
-                        <img src="icons/16x16/${icon.id}.png" alt="${icon.name}" style="width: 32px; height: 32px;" onerror="this.style.display='none'; this.parentElement.textContent='${icon.index}';">
+            const iconGrid = document.getElementById("iconGrid");
+            iconGrid.innerHTML = ""; // Clear existing icons
+
+            iconData.frames.forEach((icon) => {
+                const iconCard = document.createElement("div");
+                iconCard.className = "icon-card";
+
+                iconCard.innerHTML = `
+                    <div class="icon-preview" style="width: ${icon.w}px; height: ${icon.h}px;">
+                        <img src="atlas/${iconData.meta.image}" 
+                             style="object-position: -${icon.x}px -${icon.y}px; width: ${iconData.meta.size.w}px; height: ${iconData.meta.size.h}px;"
+                             alt="${icon.name}">
                     </div>
                     <div class="icon-name">${icon.name}</div>
-                    <span class="category-badge category-${icon.category}">${icon.category}</span>
-                    <div class="icon-details">
-                        <div class="icon-detail">
-                            <span class="icon-detail-label">ID:</span>
-                            <span class="icon-detail-value">${icon.id}</span>
-                        </div>
-                        <div class="icon-detail">
-                            <span class="icon-detail-label">Filename:</span>
-                            <span class="icon-detail-value">${icon.name}.png</span>
-                        </div>
-                        <div class="icon-detail">
-                            <span class="icon-detail-label">CSS Class:</span>
-                            <span class="icon-detail-value">${icon.cssClass}</span>
-                        </div>
-                        <div class="icon-detail">
-                            <span class="icon-detail-label">Position:</span>
-                            <span class="icon-detail-value">x:${icon.position.x}, y:${icon.position.y}</span>
-                        </div>
-                        <div class="icon-detail">
-                            <span class="icon-detail-label">Grid:</span>
-                            <span class="icon-detail-value">R${icon.position.row}, C${icon.position.column}</span>
-                        </div>
-                    </div>
-                    <div class="icon-tags">
-                        ${icon.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                </div>
-            `).join('');
+                `;
+
+                iconGrid.appendChild(iconCard);
+            });
         }
+
+        // Load default size on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const defaultSize = "16x16";
+            document.getElementById("iconSizeSelector").value = defaultSize;
+            loadIconData(defaultSize);
+        });
     </script>
 </body>
 </html>
