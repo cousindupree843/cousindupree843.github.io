@@ -1,12 +1,12 @@
-﻿<atlas>
+<atlas>
     <meta>
         <image>icon_set_16x16_atlas.png</image>
-        <size><w>74</w><h>74</h></size>
+        <size><w>110</w><h>110</h></size>
         <cell><w>16</w><h>16</h></cell>
         <padding>2</padding>
-        <columns>4</columns>
-        <rows>4</rows>
-        <count>15</count>
-        <order><file>icon-about-page-16.png</file><file>icon-accept-offer-16.png</file><file>icon-artist-16.png</file><file>icon-city-location-16.png</file><file>icon-edit-16.png</file><file>icon-explore-page-16.png</file><file>icon-favorite-like-16.png</file><file>icon-follow-16.png</file><file>icon-guestbook-16.png</file><file>icon-inbox-16.png</file><file>icon-message-16.png</file><file>icon-pin-16.png</file><file>icon-pinned-post-16.png</file><file>icon-reject-offer-16.png</file><file>icon-shipping-16.png</file></order>
+        <columns>6</columns>
+        <rows>6</rows>
+        <count>33</count>
+        <order><file>icon-about-page-16.png</file><file>icon-accept-offer-16.png</file><file>icon-artist-16.png</file><file>icon-camera-16.png</file><file>icon-city-location-16.png</file><file>icon-edit-16.png</file><file>icon-explore-page-16.png</file><file>icon-favorite-like-16.png</file><file>icon-follow-16.png</file><file>icon-gear-16.png</file><file>icon-guestbook-16.png</file><file>icon-heart-16.png</file><file>icon-home-16.png</file><file>icon-inbox-16.png</file><file>icon-mail-16.png</file><file>icon-message-16.png</file><file>icon-music-16.png</file><file>icon-phone-16.png</file><file>icon-pin-16.png</file><file>icon-pinned-post-16.png</file><file>icon-reject-offer-16.png</file><file>icon-shipping-16.png</file><file>icon-star-16.png</file><file>icon-test-camera-16.png</file><file>icon-test-gear-16.png</file><file>icon-test-heart-16.png</file><file>icon-test-home-16.png</file><file>icon-test-mail-16.png</file><file>icon-test-phone-16.png</file><file>icon-test-star-16.png</file><file>icon-test-user-16.png</file><file>icon-user-16.png</file><file>icon-video-16.png</file></order>
     </meta>
 </atlas>

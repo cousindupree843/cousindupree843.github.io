@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "columns": 5,
+    "size": {
+      "h": 74,
+      "w": 92
+    },
+    "image": "icon_set_48x48_atlas.png",
+    "padding": 2,
+    "order": [
+      "icon-camera-48.png",
+      "icon-gear-48.png",
+      "icon-heart-48.png",
+      "icon-home-48.png",
+      "icon-mail-48.png",
+      "icon-music-48.png",
+      "icon-phone-48.png",
+      "icon-star-48.png",
+      "icon-test-camera-48.png",
+      "icon-test-gear-48.png",
+      "icon-test-heart-48.png",
+      "icon-test-home-48.png",
+      "icon-test-mail-48.png",
+      "icon-test-phone-48.png",
+      "icon-test-star-48.png",
+      "icon-test-user-48.png",
+      "icon-user-48.png",
+      "icon-video-48.png"
+    ],
+    "count": 18,
+    "rows": 4,
+    "cell": {
+      "h": 16,
+      "w": 16
+    }
+  },
+  "frames": [
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 2.0,
+      "index": 0,
+      "col": 0,
+      "name": "icon-camera-48",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 2.0,
+      "index": 1,
+      "col": 1,
+      "name": "icon-gear-48",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 2.0,
+      "index": 2,
+      "col": 2,
+      "name": "icon-heart-48",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 2.0,
+      "index": 3,
+      "col": 3,
+      "name": "icon-home-48",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 2.0,
+      "index": 4,
+      "col": 4,
+      "name": "icon-mail-48",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 20.0,
+      "index": 5,
+      "col": 0,
+      "name": "icon-music-48",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 20.0,
+      "index": 6,
+      "col": 1,
+      "name": "icon-phone-48",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 20.0,
+      "index": 7,
+      "col": 2,
+      "name": "icon-star-48",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 20.0,
+      "index": 8,
+      "col": 3,
+      "name": "icon-test-camera-48",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 20.0,
+      "index": 9,
+      "col": 4,
+      "name": "icon-test-gear-48",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 38.0,
+      "index": 10,
+      "col": 0,
+      "name": "icon-test-heart-48",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 38.0,
+      "index": 11,
+      "col": 1,
+      "name": "icon-test-home-48",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 38.0,
+      "index": 12,
+      "col": 2,
+      "name": "icon-test-mail-48",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 38.0,
+      "index": 13,
+      "col": 3,
+      "name": "icon-test-phone-48",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 38.0,
+      "index": 14,
+      "col": 4,
+      "name": "icon-test-star-48",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 56.0,
+      "index": 15,
+      "col": 0,
+      "name": "icon-test-user-48",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 56.0,
+      "index": 16,
+      "col": 1,
+      "name": "icon-user-48",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 56.0,
+      "index": 17,
+      "col": 2,
+      "name": "icon-video-48",
+      "row": 3.0
+    }
+  ]
+}

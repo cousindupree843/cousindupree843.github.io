@@ -128,7 +128,7 @@ $failedCount = 0
 Write-Status "Generating $Count test icons..." "Info"
 
 for ($i = 0; $i -lt $Count; $i++) {
-    $iconName = "icon-test-$($icons[$i % $icons.Count])-$size"
+    $iconName = "icon-$($icons[$i % $icons.Count])-$size"
     $color = $colors[$i % $colors.Count]
     $text = $icons[$i % $icons.Count].Substring(0, 1).ToUpper()
     

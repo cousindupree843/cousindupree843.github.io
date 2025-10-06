@@ -1,0 +1,12 @@
+<atlas>
+    <meta>
+        <image>icon_set_48x48_atlas.png</image>
+        <size><w>92</w><h>74</h></size>
+        <cell><w>16</w><h>16</h></cell>
+        <padding>2</padding>
+        <columns>5</columns>
+        <rows>4</rows>
+        <count>18</count>
+        <order><file>icon-camera-48.png</file><file>icon-gear-48.png</file><file>icon-heart-48.png</file><file>icon-home-48.png</file><file>icon-mail-48.png</file><file>icon-music-48.png</file><file>icon-phone-48.png</file><file>icon-star-48.png</file><file>icon-test-camera-48.png</file><file>icon-test-gear-48.png</file><file>icon-test-heart-48.png</file><file>icon-test-home-48.png</file><file>icon-test-mail-48.png</file><file>icon-test-phone-48.png</file><file>icon-test-star-48.png</file><file>icon-test-user-48.png</file><file>icon-user-48.png</file><file>icon-video-48.png</file></order>
+    </meta>
+</atlas>

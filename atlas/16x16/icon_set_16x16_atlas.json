@@ -1,186 +1,384 @@
-﻿{
-    "meta":  {
-                 "size":  {
-                              "h":  74,
-                              "w":  74
-                          },
-                 "count":  15,
-                 "padding":  2,
-                 "order":  [
-                               "icon-about-page-16.png",
-                               "icon-accept-offer-16.png",
-                               "icon-artist-16.png",
-                               "icon-city-location-16.png",
-                               "icon-edit-16.png",
-                               "icon-explore-page-16.png",
-                               "icon-favorite-like-16.png",
-                               "icon-follow-16.png",
-                               "icon-guestbook-16.png",
-                               "icon-inbox-16.png",
-                               "icon-message-16.png",
-                               "icon-pin-16.png",
-                               "icon-pinned-post-16.png",
-                               "icon-reject-offer-16.png",
-                               "icon-shipping-16.png"
-                           ],
-                 "columns":  4,
-                 "rows":  4,
-                 "image":  "icon_set_16x16_atlas.png",
-                 "cell":  {
-                              "h":  16,
-                              "w":  16
-                          }
-             },
-    "frames":  [
-                   {
-                       "y":  2,
-                       "index":  0,
-                       "row":  0,
-                       "name":  "icon-about-page-16",
-                       "col":  0,
-                       "x":  2,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  2,
-                       "index":  1,
-                       "row":  0,
-                       "name":  "icon-accept-offer-16",
-                       "col":  1,
-                       "x":  20,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  2,
-                       "index":  2,
-                       "row":  0,
-                       "name":  "icon-artist-16",
-                       "col":  2,
-                       "x":  38,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  2,
-                       "index":  3,
-                       "row":  0,
-                       "name":  "icon-city-location-16",
-                       "col":  3,
-                       "x":  56,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  20,
-                       "index":  4,
-                       "row":  1,
-                       "name":  "icon-edit-16",
-                       "col":  0,
-                       "x":  2,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  20,
-                       "index":  5,
-                       "row":  1,
-                       "name":  "icon-explore-page-16",
-                       "col":  1,
-                       "x":  20,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  20,
-                       "index":  6,
-                       "row":  1,
-                       "name":  "icon-favorite-like-16",
-                       "col":  2,
-                       "x":  38,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  20,
-                       "index":  7,
-                       "row":  1,
-                       "name":  "icon-follow-16",
-                       "col":  3,
-                       "x":  56,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  38,
-                       "index":  8,
-                       "row":  2,
-                       "name":  "icon-guestbook-16",
-                       "col":  0,
-                       "x":  2,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  38,
-                       "index":  9,
-                       "row":  2,
-                       "name":  "icon-inbox-16",
-                       "col":  1,
-                       "x":  20,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  38,
-                       "index":  10,
-                       "row":  2,
-                       "name":  "icon-message-16",
-                       "col":  2,
-                       "x":  38,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  38,
-                       "index":  11,
-                       "row":  2,
-                       "name":  "icon-pin-16",
-                       "col":  3,
-                       "x":  56,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  56,
-                       "index":  12,
-                       "row":  3,
-                       "name":  "icon-pinned-post-16",
-                       "col":  0,
-                       "x":  2,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  56,
-                       "index":  13,
-                       "row":  3,
-                       "name":  "icon-reject-offer-16",
-                       "col":  1,
-                       "x":  20,
-                       "w":  16,
-                       "h":  16
-                   },
-                   {
-                       "y":  56,
-                       "index":  14,
-                       "row":  3,
-                       "name":  "icon-shipping-16",
-                       "col":  2,
-                       "x":  38,
-                       "w":  16,
-                       "h":  16
-                   }
-               ]
+{
+  "meta": {
+    "columns": 6,
+    "size": {
+      "h": 110,
+      "w": 110
+    },
+    "image": "icon_set_16x16_atlas.png",
+    "padding": 2,
+    "order": [
+      "icon-about-page-16.png",
+      "icon-accept-offer-16.png",
+      "icon-artist-16.png",
+      "icon-camera-16.png",
+      "icon-city-location-16.png",
+      "icon-edit-16.png",
+      "icon-explore-page-16.png",
+      "icon-favorite-like-16.png",
+      "icon-follow-16.png",
+      "icon-gear-16.png",
+      "icon-guestbook-16.png",
+      "icon-heart-16.png",
+      "icon-home-16.png",
+      "icon-inbox-16.png",
+      "icon-mail-16.png",
+      "icon-message-16.png",
+      "icon-music-16.png",
+      "icon-phone-16.png",
+      "icon-pin-16.png",
+      "icon-pinned-post-16.png",
+      "icon-reject-offer-16.png",
+      "icon-shipping-16.png",
+      "icon-star-16.png",
+      "icon-test-camera-16.png",
+      "icon-test-gear-16.png",
+      "icon-test-heart-16.png",
+      "icon-test-home-16.png",
+      "icon-test-mail-16.png",
+      "icon-test-phone-16.png",
+      "icon-test-star-16.png",
+      "icon-test-user-16.png",
+      "icon-user-16.png",
+      "icon-video-16.png"
+    ],
+    "count": 33,
+    "rows": 6,
+    "cell": {
+      "h": 16,
+      "w": 16
+    }
+  },
+  "frames": [
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 2.0,
+      "index": 0,
+      "col": 0,
+      "name": "icon-about-page-16",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 2.0,
+      "index": 1,
+      "col": 1,
+      "name": "icon-accept-offer-16",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 2.0,
+      "index": 2,
+      "col": 2,
+      "name": "icon-artist-16",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 2.0,
+      "index": 3,
+      "col": 3,
+      "name": "icon-camera-16",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 2.0,
+      "index": 4,
+      "col": 4,
+      "name": "icon-city-location-16",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 92,
+      "h": 16,
+      "y": 2.0,
+      "index": 5,
+      "col": 5,
+      "name": "icon-edit-16",
+      "row": 0.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 20.0,
+      "index": 6,
+      "col": 0,
+      "name": "icon-explore-page-16",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 20.0,
+      "index": 7,
+      "col": 1,
+      "name": "icon-favorite-like-16",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 20.0,
+      "index": 8,
+      "col": 2,
+      "name": "icon-follow-16",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 20.0,
+      "index": 9,
+      "col": 3,
+      "name": "icon-gear-16",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 20.0,
+      "index": 10,
+      "col": 4,
+      "name": "icon-guestbook-16",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 92,
+      "h": 16,
+      "y": 20.0,
+      "index": 11,
+      "col": 5,
+      "name": "icon-heart-16",
+      "row": 1.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 38.0,
+      "index": 12,
+      "col": 0,
+      "name": "icon-home-16",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 38.0,
+      "index": 13,
+      "col": 1,
+      "name": "icon-inbox-16",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 38.0,
+      "index": 14,
+      "col": 2,
+      "name": "icon-mail-16",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 38.0,
+      "index": 15,
+      "col": 3,
+      "name": "icon-message-16",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 38.0,
+      "index": 16,
+      "col": 4,
+      "name": "icon-music-16",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 92,
+      "h": 16,
+      "y": 38.0,
+      "index": 17,
+      "col": 5,
+      "name": "icon-phone-16",
+      "row": 2.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 56.0,
+      "index": 18,
+      "col": 0,
+      "name": "icon-pin-16",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 56.0,
+      "index": 19,
+      "col": 1,
+      "name": "icon-pinned-post-16",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 56.0,
+      "index": 20,
+      "col": 2,
+      "name": "icon-reject-offer-16",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 56.0,
+      "index": 21,
+      "col": 3,
+      "name": "icon-shipping-16",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 56.0,
+      "index": 22,
+      "col": 4,
+      "name": "icon-star-16",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 92,
+      "h": 16,
+      "y": 56.0,
+      "index": 23,
+      "col": 5,
+      "name": "icon-test-camera-16",
+      "row": 3.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 74.0,
+      "index": 24,
+      "col": 0,
+      "name": "icon-test-gear-16",
+      "row": 4.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 74.0,
+      "index": 25,
+      "col": 1,
+      "name": "icon-test-heart-16",
+      "row": 4.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 74.0,
+      "index": 26,
+      "col": 2,
+      "name": "icon-test-home-16",
+      "row": 4.0
+    },
+    {
+      "w": 16,
+      "x": 56,
+      "h": 16,
+      "y": 74.0,
+      "index": 27,
+      "col": 3,
+      "name": "icon-test-mail-16",
+      "row": 4.0
+    },
+    {
+      "w": 16,
+      "x": 74,
+      "h": 16,
+      "y": 74.0,
+      "index": 28,
+      "col": 4,
+      "name": "icon-test-phone-16",
+      "row": 4.0
+    },
+    {
+      "w": 16,
+      "x": 92,
+      "h": 16,
+      "y": 74.0,
+      "index": 29,
+      "col": 5,
+      "name": "icon-test-star-16",
+      "row": 4.0
+    },
+    {
+      "w": 16,
+      "x": 2,
+      "h": 16,
+      "y": 92.0,
+      "index": 30,
+      "col": 0,
+      "name": "icon-test-user-16",
+      "row": 5.0
+    },
+    {
+      "w": 16,
+      "x": 20,
+      "h": 16,
+      "y": 92.0,
+      "index": 31,
+      "col": 1,
+      "name": "icon-user-16",
+      "row": 5.0
+    },
+    {
+      "w": 16,
+      "x": 38,
+      "h": 16,
+      "y": 92.0,
+      "index": 32,
+      "col": 2,
+      "name": "icon-video-16",
+      "row": 5.0
+    }
+  ]
 }

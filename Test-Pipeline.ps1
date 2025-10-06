@@ -12,7 +12,10 @@ param(
     [switch]$Cleanup,
     
     [Parameter(Mandatory=$false)]
-    [switch]$AllSizes
+    [switch]$AllSizes,
+    
+    [Parameter(Mandatory=$false)]
+    [switch]$Interactive
 )
 
 function Write-Status {
@@ -58,12 +61,22 @@ function Remove-TestFiles {
     $testIconPath = "icons/$Size"
     $testAtlasPath = "atlas/$Size"
     
-    # Remove test icons
+    # Remove generated test icons (look for the specific pattern we generate)
     if (Test-Path $testIconPath) {
-        $testIcons = Get-ChildItem -Path $testIconPath -Filter "icon-test-*" -ErrorAction SilentlyContinue
+        $testIcons = Get-ChildItem -Path $testIconPath -Filter "icon-home-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-user-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-gear-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-star-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-heart-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-mail-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-phone-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-camera-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-music-*" -ErrorAction SilentlyContinue
+        $testIcons += Get-ChildItem -Path $testIconPath -Filter "icon-video-*" -ErrorAction SilentlyContinue
+        
         if ($testIcons) {
             $testIcons | Remove-Item -Force
-            Write-Status "Removed $($testIcons.Count) test icons from $testIconPath" "Info"
+            Write-Status "Removed $($testIcons.Count) generated test icons from $testIconPath" "Info"
         }
     }
     
@@ -148,8 +161,83 @@ function Test-AllSizes {
     return $totalResults
 }
 
+# Interactive mode function
+function Show-InteractiveMenu {
+    Write-Host "=========================================" -ForegroundColor Cyan
+    Write-Host "Visual Asset Library - Test Pipeline" -ForegroundColor Cyan
+    Write-Host "=========================================" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "Choose test option:" -ForegroundColor White
+    Write-Host "1. Test single size (16x16)" -ForegroundColor White
+    Write-Host "2. Test all sizes (16x16, 32x32, 48x48, 64x64)" -ForegroundColor White
+    Write-Host "3. Cleanup all test data" -ForegroundColor White
+    Write-Host "4. Exit" -ForegroundColor White
+    Write-Host ""
+    
+    $choice = Read-Host "Enter choice (1-4)"
+    
+    switch ($choice) {
+        "1" {
+            Write-Host ""
+            Write-Host "Testing single size (16x16)..." -ForegroundColor Green
+            Write-Host ""
+            return @{ Mode = "Single"; Size = "16x16"; Count = 8 }
+        }
+        "2" {
+            Write-Host ""
+            Write-Host "Testing all sizes..." -ForegroundColor Green
+            Write-Host "This will generate test data for ALL icon sizes:" -ForegroundColor White
+            Write-Host "• 16x16 icons (8 icons)" -ForegroundColor White
+            Write-Host "• 32x32 icons (8 icons)" -ForegroundColor White
+            Write-Host "• 48x48 icons (8 icons)" -ForegroundColor White
+            Write-Host "• 64x64 icons (8 icons)" -ForegroundColor White
+            Write-Host ""
+            $confirm = Read-Host "Continue? (y/N)"
+            if ($confirm -ne "y" -and $confirm -ne "Y") {
+                Write-Host "Test cancelled." -ForegroundColor Yellow
+                return $null
+            }
+            Write-Host ""
+            return @{ Mode = "AllSizes"; Count = 8 }
+        }
+        "3" {
+            Write-Host ""
+            Write-Host "Cleaning up all test data..." -ForegroundColor Yellow
+            return @{ Mode = "Cleanup" }
+        }
+        "4" {
+            Write-Host "Exiting..." -ForegroundColor Yellow
+            return @{ Mode = "Exit" }
+        }
+        default {
+            Write-Host "Invalid choice. Please enter 1-4." -ForegroundColor Red
+            return Show-InteractiveMenu
+        }
+    }
+}
+
 # Main execution
 Write-Status "Starting end-to-end pipeline test..." "Info"
+
+# Handle interactive mode
+if ($Interactive) {
+    $menuResult = Show-InteractiveMenu
+    if ($menuResult.Mode -eq "Exit") {
+        exit 0
+    }
+    if ($menuResult.Mode -eq "Cleanup") {
+        $AllSizes = $true
+        $Cleanup = $true
+    }
+    if ($menuResult.Mode -eq "AllSizes") {
+        $AllSizes = $true
+        $IconCount = $menuResult.Count
+    }
+    if ($menuResult.Mode -eq "Single") {
+        $TestSize = $menuResult.Size
+        $IconCount = $menuResult.Count
+    }
+}
 
 if ($AllSizes) {
     Write-Status "Running comprehensive test for ALL icon sizes" "Info"
@@ -179,7 +267,16 @@ $testResults = @()
 $testResults += Test-PipelineStep "Generate Test Icons" {
     Write-Status "Running Generate-Test-Icons.ps1..." "Info"
     $iconResult = & ".\Generate-Test-Icons.ps1" -IconSize $TestSize -Count $IconCount
-    $testIcons = Get-ChildItem -Path "icons/$TestSize" -Filter "icon-test-*" -ErrorAction SilentlyContinue
+    $testIcons = Get-ChildItem -Path "icons/$TestSize" -Filter "icon-home-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-user-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-gear-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-star-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-heart-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-mail-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-phone-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-camera-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-music-*" -ErrorAction SilentlyContinue
+    $testIcons += Get-ChildItem -Path "icons/$TestSize" -Filter "icon-video-*" -ErrorAction SilentlyContinue
     
     if (-not $testIcons) {
         Write-Status "No test icons found in icons/$TestSize" "Error"
@@ -369,3 +466,14 @@ if ($passedCount -eq $totalCount) {
 }
 
 Write-Status "Test complete." "Info"
+
+# Show usage help if no parameters provided
+if (-not $Interactive -and -not $AllSizes -and -not $Cleanup -and $TestSize -eq "16x16" -and $IconCount -eq 8) {
+    Write-Status "" "Info"
+    Write-Status "Usage examples:" "Info"
+    Write-Status "  .\Test-Pipeline.ps1 -Interactive          # Interactive menu" "Info"
+    Write-Status "  .\Test-Pipeline.ps1 -AllSizes            # Test all sizes" "Info"
+    Write-Status "  .\Test-Pipeline.ps1 -TestSize 32x32      # Test specific size" "Info"
+    Write-Status "  .\Test-Pipeline.ps1 -AllSizes -Cleanup   # Cleanup all test data" "Info"
+    Write-Status "" "Info"
+}
