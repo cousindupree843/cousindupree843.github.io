@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #FAFAFA;
+            padding: 10px;
+            font-size: 12px;
+            color: #2e2e2e;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border: 2px solid #2e2e2e;
+            padding: 10px;
+        }
+        
+        h1 {
+            color: #7900A7;
+            font-weight: bold;
+            font-size: 12px;
+            font-family: Georgia, serif;
+            margin: 0;
+            line-height: 14px;
+        }
+        
+        h2 {
+            color: #7900A7;
+            font-weight: bold;
+            font-size: 12px;
+            font-family: Georgia, serif;
+            margin: 10px 0 5px 0;
+        }
+        
+        p {
+            font-size: 12px;
+            margin: 0 0 5px 0;
+        }
+        
+        .controls {
+            border: 1px solid #2e2e2e;
+            padding: 5px;
+            margin: 10px 0;
+        }
+        
+        .control-row {
+            margin: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        label {
+            font-weight: bold;
+            color: #2e2e2e;
+            font-size: 12px;
+            min-width: 120px;
+        }
+        
+        select, input[type="number"] {
+            padding: 3px;
+            border: 1px solid #2e2e2e;
+            font-size: 12px;
+            background: white;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+        }
+        
+        button {
+            padding: 5px 10px;
+            border: 2px solid #2e2e2e;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            background: white;
+            color: #7900A7;
+            margin: 2px 5px 2px 0;
+        }
+        
+        button:hover {
+            background: #7900A7;
+            color: white;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: default;
+            color: #999;
+        }
+        
+        button:disabled:hover {
+            background: white;
+            color: #999;
+        }
+        
+        .canvas-container {
+            border: 2px solid #2e2e2e;
+            background: white;
+            max-height: 600px;
+            max-width: 100%;
+            overflow: auto;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        canvas {
+            display: block;
+            image-rendering: pixelated;
+            max-width: 100%;
+            max-height: 600px;
+            height: auto;
+            width: auto;
+        }
+        
+        .info-message {
+            background: #ffffcc;
+            border: 1px solid #2e2e2e;
+            padding: 5px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid #ffcdd2;
+            font-size: 12px;
+        }
+        
+        .success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid #c8e6c9;
+            font-size: 12px;
+        }
+        
+        .file-list {
+            border: 1px solid #2e2e2e;
+            padding: 5px;
+            margin: 10px 0;
+            background: #f5f5f5;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            font-size: 11px;
+            margin: 2px 0;
+            padding: 2px;
+            background: white;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Atlas Generator</h1>
+        <p>Generate spritesheets and atlas JSON from icon directories</p>
+        
+        <h2>Source Directory</h2>
+        <div class="controls">
+            <div class="control-row">
+                <label for="iconSize">Icon Size:</label>
+                <select id="iconSize">
+                    <option value="16x16">16x16</option>
+                    <option value="32x32">32x32</option>
+                    <option value="48x48">48x48</option>
+                    <option value="64x64">64x64</option>
+                </select>
+            </div>
+            
+            <div class="control-row">
+                <label for="padding">Padding (px):</label>
+                <input type="number" id="padding" value="2" min="0" style="width: 80px;">
+            </div>
+        </div>
+        
+        <div id="statusMessage"></div>
+        
+        <h2>Source Files</h2>
+        <div id="fileList" class="file-list">
+            <div class="info-message">Select icon size to load source files</div>
+        </div>
+        
+        <div class="buttons">
+            <button id="loadFiles" disabled>Load Source Files</button>
+            <button id="generateAtlas" disabled>Generate Atlas</button>
+            <button id="downloadPng" disabled>Download PNG</button>
+            <button id="downloadJson" disabled>Download JSON</button>
+            <button id="downloadCsv" disabled>Download CSV</button>
+        </div>
+        
+        <h2>Preview</h2>
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+
+    <script>
+        class AtlasGenerator {
+            constructor() {
+                this.images = [];
+                this.canvas = document.getElementById('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.spriteData = [];
+                this.atlasData = null;
+                
+                this.initEventListeners();
+            }
+            
+            initEventListeners() {
+                document.getElementById('iconSize').addEventListener('change', () => this.loadSourceFiles());
+                document.getElementById('loadFiles').addEventListener('click', () => this.loadSourceFiles());
+                document.getElementById('generateAtlas').addEventListener('click', () => this.generateAtlas());
+                document.getElementById('downloadPng').addEventListener('click', () => this.downloadPng());
+                document.getElementById('downloadJson').addEventListener('click', () => this.downloadJson());
+                document.getElementById('downloadCsv').addEventListener('click', () => this.downloadCsv());
+            }
+            
+            showStatus(message, type = 'info') {
+                const statusDiv = document.getElementById('statusMessage');
+                statusDiv.innerHTML = `<div class="${type}">${message}</div>`;
+            }
+            
+            async loadSourceFiles() {
+                const size = document.getElementById('iconSize').value;
+                this.showStatus(`Loading source files for ${size}...`, 'info');
+                
+                try {
+                    // Try to load files from the icons directory
+                    const response = await fetch(`icons/${size}/`);
+                    if (!response.ok) {
+                        throw new Error(`Directory icons/${size}/ not found`);
+                    }
+                    
+                    // For now, we'll work with the known files
+                    // In a real implementation, you'd need a server-side solution to list files
+                    this.images = await this.loadKnownFiles(size);
+                    this.displayFileList();
+                    this.enableButtons();
+                    this.showStatus(`Loaded ${this.images.length} source files`, 'success');
+                    
+                } catch (error) {
+                    this.showStatus(`Error loading source files: ${error.message}`, 'error');
+                }
+            }
+            
+            async loadKnownFiles(size) {
+                // Known files for each size - in a real implementation, this would be dynamic
+                const knownFiles = {
+                    '16x16': [
+                        'icon-about-page-16.png',
+                        'icon-accept-offer-16.png',
+                        'icon-artist-16.png',
+                        'icon-city-location-16.png',
+                        'icon-edit-16.png',
+                        'icon-explore-page-16.png',
+                        'icon-favorite-like-16.png',
+                        'icon-follow-16.png',
+                        'icon-guestbook-16.png',
+                        'icon-inbox-16.png',
+                        'icon-message-16.png',
+                        'icon-pin-16.png',
+                        'icon-pinned-post-16.png',
+                        'icon-reject-offer-16.png',
+                        'icon-shipping-16.png'
+                    ]
+                };
+                
+                const files = knownFiles[size] || [];
+                const images = [];
+                
+                for (const fileName of files) {
+                    try {
+                        const img = await this.loadImage(`icons/${size}/${fileName}`);
+                        images.push({ img, name: fileName });
+                    } catch (error) {
+                        console.warn(`Failed to load ${fileName}:`, error);
+                    }
+                }
+                
+                return images;
+            }
+            
+            loadImage(src) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => resolve(img);
+                    img.onerror = reject;
+                    img.src = src;
+                });
+            }
+            
+            displayFileList() {
+                const fileList = document.getElementById('fileList');
+                if (this.images.length === 0) {
+                    fileList.innerHTML = '<div class="info-message">No source files found</div>';
+                    return;
+                }
+                
+                let html = '';
+                this.images.forEach((item, index) => {
+                    html += `<div class="file-item">${index + 1}. ${item.name} (${item.img.width}×${item.img.height})</div>`;
+                });
+                fileList.innerHTML = html;
+            }
+            
+            generateAtlas() {
+                if (this.images.length === 0) {
+                    this.showStatus('No images to process', 'error');
+                    return;
+                }
+                
+                const padding = parseInt(document.getElementById('padding').value) || 0;
+                const size = document.getElementById('iconSize').value;
+                
+                // Calculate grid dimensions
+                const cols = Math.ceil(Math.sqrt(this.images.length));
+                const rows = Math.ceil(this.images.length / cols);
+                
+                // Calculate cell size (all icons should be the same size)
+                const cellWidth = Math.max(...this.images.map(img => img.img.width));
+                const cellHeight = Math.max(...this.images.map(img => img.img.height));
+                
+                // Calculate canvas dimensions
+                const canvasWidth = padding + cols * (cellWidth + padding);
+                const canvasHeight = padding + rows * (cellHeight + padding);
+                
+                // Set canvas size
+                this.canvas.width = canvasWidth;
+                this.canvas.height = canvasHeight;
+                this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                
+                // Generate sprite data
+                this.spriteData = [];
+                const frames = [];
+                const order = [];
+                
+                for (let i = 0; i < this.images.length; i++) {
+                    const row = Math.floor(i / cols);
+                    const col = i % cols;
+                    const img = this.images[i].img;
+                    
+                    const x = padding + col * (cellWidth + padding);
+                    const y = padding + row * (cellHeight + padding);
+                    
+                    // Draw image
+                    this.ctx.drawImage(img, x, y, img.width, img.height);
+                    
+                    // Create sprite data
+                    const spriteName = img.name.replace(/\.[^/.]+$/, '');
+                    const spriteData = {
+                        name: spriteName,
+                        index: i,
+                        row: row,
+                        col: col,
+                        x: x,
+                        y: y,
+                        w: img.width,
+                        h: img.height
+                    };
+                    
+                    this.spriteData.push(spriteData);
+                    frames.push(spriteData);
+                    order.push(img.name);
+                }
+                
+                // Generate atlas metadata
+                this.atlasData = {
+                    meta: {
+                        image: `icon_set_${size}_atlas.png`,
+                        size: {
+                            w: canvasWidth,
+                            h: canvasHeight
+                        },
+                        cell: {
+                            w: cellWidth,
+                            h: cellHeight
+                        },
+                        padding: padding,
+                        columns: cols,
+                        rows: rows,
+                        count: this.images.length,
+                        order: order
+                    },
+                    frames: frames
+                };
+                
+                // Scale canvas for display
+                this.scaleCanvasForDisplay();
+                
+                this.showStatus(`Generated atlas with ${this.images.length} icons (${cols}×${rows} grid)`, 'success');
+                this.enableDownloadButtons();
+            }
+            
+            scaleCanvasForDisplay() {
+                const container = this.canvas.parentElement;
+                const maxW = container.clientWidth || 1200;
+                const maxH = 600;
+                let scale = 1;
+                if (this.canvas.width > maxW || this.canvas.height > maxH) {
+                    scale = Math.min(maxW / this.canvas.width, maxH / this.canvas.height, 1);
+                }
+                this.canvas.style.width = Math.round(this.canvas.width * scale) + 'px';
+                this.canvas.style.height = Math.round(this.canvas.height * scale) + 'px';
+            }
+            
+            enableButtons() {
+                document.getElementById('loadFiles').disabled = false;
+                document.getElementById('generateAtlas').disabled = false;
+            }
+            
+            enableDownloadButtons() {
+                document.getElementById('downloadPng').disabled = false;
+                document.getElementById('downloadJson').disabled = false;
+                document.getElementById('downloadCsv').disabled = false;
+            }
+            
+            downloadPng() {
+                const size = document.getElementById('iconSize').value;
+                const link = document.createElement('a');
+                link.download = `icon_set_${size}_atlas.png`;
+                link.href = this.canvas.toDataURL('image/png');
+                link.click();
+            }
+            
+            downloadJson() {
+                if (!this.atlasData) {
+                    this.showStatus('No atlas data to download', 'error');
+                    return;
+                }
+                
+                const size = document.getElementById('iconSize').value;
+                const blob = new Blob([JSON.stringify(this.atlasData, null, 2)], { type: 'application/json' });
+                const link = document.createElement('a');
+                link.download = `icon_set_${size}_atlas.json`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            }
+            
+            downloadCsv() {
+                if (!this.spriteData.length) {
+                    this.showStatus('No sprite data to download', 'error');
+                    return;
+                }
+                
+                const size = document.getElementById('iconSize').value;
+                let csv = 'index,name,row,col,x,y,w,h\n';
+                
+                this.spriteData.forEach((sprite, index) => {
+                    csv += `${index},${sprite.name},${sprite.row},${sprite.col},${sprite.x},${sprite.y},${sprite.w},${sprite.h}\n`;
+                });
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const link = document.createElement('a');
+                link.download = `icon_set_${size}_atlas.csv`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            }
+        }
+        
+        new AtlasGenerator();
+    </script>
+</body>
+</html>
